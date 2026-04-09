@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find *)",
+      "Bash(source *)",
+      "Bash(conda *)",
+      "Bash(python *)"
+    ]
+  },
+  "$version": 3
+}
