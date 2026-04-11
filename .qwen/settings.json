@@ -4,7 +4,9 @@
       "Bash(find *)",
       "Bash(source *)",
       "Bash(conda *)",
-      "Bash(python *)"
+      "Bash(python *)",
+      "Read(//home/lzj/miniforge3/envs/py312/lib/python3.12/site-packages/transformers/models/qwen3/**)",
+      "Read(//home/lzj/miniforge3/envs/py312/lib/python3.12/site-packages/transformers/**)"
     ]
   },
   "$version": 3

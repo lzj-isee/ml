@@ -92,6 +92,10 @@ TODO
 - **Causal LM**：完全单向，第 k 个 token 无法感知 k+1 个 token，attention 是下三角矩阵
 - **Prefix LM**：分成两部分，prefix 部分可双向感知，generation 部分只能向前感知，attention 矩阵分两块（完全矩阵 + 下三角）
 
+### 5. GQA的好处是什么？
+
+
+
 ---
 
 ## 四、模型架构
@@ -333,6 +337,9 @@ TODO
 
 TODO
 
+### 8. Harness方案是什么？
+
+
 ---
 
 ## 十三、代码考核题
@@ -361,9 +368,9 @@ TODO
 8. [704. 二分查找](https://leetcode.cn/problems/binary-search/)
 9. [面试题 10.03. 搜索旋转数组](https://leetcode.cn/problems/search-rotate-array-lcci/)
 10. [221. 最大正方形](https://leetcode.cn/problems/maximal-square/)
-11. [1608. 特殊数组的特征值](https://leetcode.cn/problems/special-array-with-x-elements-greater-than-or-equal-x/)
-12. [322. 零钱兑换](https://leetcode.cn/problems/coin-change/)
-13. [518. 零钱兑换 II](https://leetcode.cn/problems/coin-change-ii/)
+11. [x] [1608. 特殊数组的特征值](https://leetcode.cn/problems/special-array-with-x-elements-greater-than-or-equal-x/)
+12. [x] [322. 零钱兑换](https://leetcode.cn/problems/coin-change/)
+13. [x] [518. 零钱兑换 II](https://leetcode.cn/problems/coin-change-ii/)
 
 ---
 
