@@ -367,7 +367,7 @@ TODO
 7. [79. 单词搜索](https://leetcode.cn/problems/word-search/)
 8. [704. 二分查找](https://leetcode.cn/problems/binary-search/)
 9. [面试题 10.03. 搜索旋转数组](https://leetcode.cn/problems/search-rotate-array-lcci/)
-10. [221. 最大正方形](https://leetcode.cn/problems/maximal-square/)
+10. [x] [221. 最大正方形](https://leetcode.cn/problems/maximal-square/)
 11. [x] [1608. 特殊数组的特征值](https://leetcode.cn/problems/special-array-with-x-elements-greater-than-or-equal-x/)
 12. [x] [322. 零钱兑换](https://leetcode.cn/problems/coin-change/)
 13. [x] [518. 零钱兑换 II](https://leetcode.cn/problems/coin-change-ii/)
