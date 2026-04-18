@@ -56,7 +56,7 @@ if __name__ == "__main__":
     linear.weight.data = torch.tensor(W_np, dtype=torch.float64)
     linear.bias.data = torch.tensor(b_np, dtype=torch.float64)
 
-    y_torch = linear(x_torch)
+    y_torch: torch.Tensor = linear(x_torch)
     y_np = linear_forward(x_np, W_np, b_np)
 
     # 验证 forward
