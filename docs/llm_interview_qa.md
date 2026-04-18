@@ -358,19 +358,23 @@ TODO
 
 ## 十四、算法题（SeedCoding）
 
-1. [802. 找到最终的安全状态](https://leetcode.cn/problems/find-eventual-safe-states/)
-2. [199. 二叉树的右视图](https://leetcode.cn/problems/binary-tree-right-side-view/)
-3. [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
-4. [88. 合并两个有序数组](https://leetcode.cn/problems/merge-sorted-array/)
-5. [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
-6. 海量数据求中位数
-7. [79. 单词搜索](https://leetcode.cn/problems/word-search/)
-8. [704. 二分查找](https://leetcode.cn/problems/binary-search/)
-9. [面试题 10.03. 搜索旋转数组](https://leetcode.cn/problems/search-rotate-array-lcci/)
+1. [x] [802. 找到最终的安全状态](https://leetcode.cn/problems/find-eventual-safe-states/)
+2. [x] [199. 二叉树的右视图](https://leetcode.cn/problems/binary-tree-right-side-view/)
+3. [x] [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
+4. [x] [88. 合并两个有序数组](https://leetcode.cn/problems/merge-sorted-array/)
+5. [x] [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
+6. [x] 海量数据求中位数, 询问数据范围等等，可以提出用分桶的方法，基本只需要On，如果未知分布，或者分布非常不均衡，可以用分块排序与作为兜底
+7. [x] [79. 单词搜索](https://leetcode.cn/problems/word-search/)
+8. [x] [704. 二分查找](https://leetcode.cn/problems/binary-search/) # NOTE: 这题得靠背
+9. [x] [面试题 10.03. 搜索旋转数组](https://leetcode.cn/problems/search-rotate-array-lcci/) # NOTE: 这题得靠背
 10. [x] [221. 最大正方形](https://leetcode.cn/problems/maximal-square/)
 11. [x] [1608. 特殊数组的特征值](https://leetcode.cn/problems/special-array-with-x-elements-greater-than-or-equal-x/)
 12. [x] [322. 零钱兑换](https://leetcode.cn/problems/coin-change/)
 13. [x] [518. 零钱兑换 II](https://leetcode.cn/problems/coin-change-ii/)
+
+## SUPPLEMENTARY
+
+1. [图像理解与生成统一模型——前沿模型架构理解](https://zhuanlan.zhihu.com/p/1943651171823777079) 
 
 ---
 
