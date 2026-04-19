@@ -34,7 +34,7 @@ class MLP:
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # x: [..., h]
         y1 = self.up.forward(x) # [..., moe_d]
-        y2 = torch.sigmoid(self.gate.forward(x))
+        y2 = torch.nn.functional.silu(self.gate.forward(x))
         y3 = self.down(y1 * y2)
         return y3 # [..., h]
     
