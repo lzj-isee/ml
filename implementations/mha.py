@@ -59,9 +59,9 @@ class Attention:
         k: torch.Tensor = self.k_linear(x).view((*x.shape[:-1], self.num_kv, self.head_dim)) # b, s, n, d
         v: torch.Tensor = self.v_linear(x).view((*x.shape[:-1], self.num_kv, self.head_dim)) # b, s, n, d
         q = self.q_norm.forward(q)  # b, s, m, d
-        k = self.k_norm.forward(k).expand_as(q).transpose(1, 2)  # b, m, s, d
+        k = self.k_norm.forward(k).repeat_interleave(self.num_q // self.num_kv, dim = 2).transpose(1, 2)  # b, m, s, d
         q = q.transpose(1, 2) # b, m, s, d
-        v = v.expand_as(q).transpose(1, 2) # b, m, s, d
+        v = v.repeat_interleave(self.num_q // self.num_kv, dim = 2).transpose(1, 2) # b, m, s, d
         # omit rope right now
         q = self.rope.apply_rope(q, self.cos, self.sin)
         k = self.rope.apply_rope(k, self.cos, self.sin)
