@@ -8,8 +8,6 @@
 
 ### 1. Transformer 的自注意力机制及相比 RNN 的优势？
 
-**优势：**
-
 1. RNN 难以有效捕捉长距离依赖；自注意力机制直接建模所有 token 之间的关系，无论距离远近，轻松捕捉全局依赖
 2. RNN 上下文信息逐时间步累积，前向传播中较早的信息可能丢失；Transformer 每个 token 都能直接访问整个序列的上下文，信息保留更完整
 3. RNN 固定内存占用；Transformer 为二阶复杂度，超长 context 占用大量显存
@@ -36,6 +34,8 @@ Q 和 K 的元素通常均值为 0，方差为 1。点积 `q @ k` 是 `d_k` 个�
 缩放后方差稳定在 1 左右，保证训练稳定。
 
 ### 3. 为什么 Transformer 需要多头注意力机制？
+
+我觉得可以从 metric 角度理解，单头的话一个q只能以某种 metric 计算和 k 的相似度。如果问题比较复杂，比如一个q需要以两种度量计算和k的关系，那么一层的单头做不到，但是一层的多头能做到。
 
 Attention 是一种动态的线性加权计算。单头情况下，每次 attention 只能关注一个方面。
 
@@ -81,11 +81,15 @@ Hidden-state 分成两路：
 
 ### 2. MHA / GQA / MQA 区别？
 
-TODO
+1. 首先都是将dimension分成多个组的做法
+2. MHA是将QKV都分成相同数量的组，每组独立做attention
+3. GQA是多个Q共享同一个KV，KV的数量小于Q，比如Q为8，KV为2，那么就是4个Q共享同一个
+4. MQA是多个Q通向同一个KV，KV的数量固定为1。
 
 ### 3. Cross Attention 和 Self Attention 区别？
 
-TODO
+1. cross-attention一般是用在两个序列计算注意力的时候使用，比如文本生成图片
+2. self-attn一般是一个序列的所有token之间计算注意力
 
 ### 4. Prefix LM 与 Causal LM 区别？
 
@@ -94,7 +98,7 @@ TODO
 
 ### 5. GQA的好处是什么？
 
-
+1. 相比MHA节省了linear层的计算量和带宽，相比MQA增加了自由度，是MQA和MHA之间的权衡
 
 ---
 
@@ -168,7 +172,7 @@ $$\text{softmax}(x) = \text{softmax}(x - \max(x))$$
 
 ### 2. Adapter 和 LoRA 的区别？
 
-TODO
+1. Adapter是新增加一些linear层做映射适配，lora是在原linear的基础上线性地加一个低秩矩阵。前者增加网络层，后者不改变网络层。
 
 ### 3. P-Tuning 原理
 
@@ -184,11 +188,11 @@ TODO
 
 ### 1. PPO 用了几个模型？
 
-TODO
+1. 4个，actor，critic，reference，reward（可选）
 
 ### 2. GRPO 相比 PPO 节省了哪个模型？
 
-TODO
+1. 节约了critic
 
 ### 3. RLHF 的 KL 散度作用？
 
@@ -205,11 +209,11 @@ TODO
 
 ### 5. 什么是 Reward Hacking？
 
-TODO
+1. 模型训练过程中尝试获取更高的reward，但是策略并不对最终结果有正面影响，反而是捕获到了reward模型/规则的某些漏洞刷分。
 
 ### 6. Reference 模型在训练中会更新吗？
 
-TODO
+1. 不会
 
 ### 7. GRPO 的 Training Loop 描述？
 
@@ -346,12 +350,12 @@ TODO
 
 ### 待实现
 
-- [ ] 手撕 Cross Attention
-- [ ] 手撕 MHA（PyTorch）
-- [ ] 手撕 RoPE
-- [ ] 写 ReLU 和 SwiGLU
+- [x] 手撕 Cross Attention
+- [x] 手撕 MHA（PyTorch）
+- [x] 手撕 RoPE
+- [x] 写 ReLU 和 SwiGLU
 - [ ] 手撕 Softmax（含数值稳定性）
-- [ ] 手撕 RMS Norm
+- [x] 手撕 RMS Norm
 - [ ] 手撕 Layer Norm
 
 ---
