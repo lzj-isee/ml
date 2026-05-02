@@ -9,7 +9,7 @@
 | 文件 | 内容概述 |
 |------|----------|
 | [`llm/tokenization.md`](llm/tokenization.md) | 分词方法详解：BBPE (Byte-level BPE) 原理、构建步骤、与BPE对比、跨语言通用性、OOV问题处理 |
-| [`llm/rlhf.md`](llm/rlhf.md) | RLHF/PPO/GRPO/DPO：GAE、Token/Sequence-level Advantage、Bradley-Terry、DPO推导与损失函数 |
+| [`llm/rlhf.md`](llm/rlhf.md) | RLHF/PPO/GRPO/DPO：GAE、Token/Sequence-level Advantage、Bradley-Terry、变分法推导、DPO损失函数 |
 | [`llm/decoding.md`](llm/decoding.md) | 解码与采样：Frequency/Presence Penalty计算原理、代码实现、与Temperature区别 |
 
 ---
