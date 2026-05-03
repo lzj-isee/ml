@@ -260,4 +260,34 @@ $$
 
 ---
 
+## DAPO：GRPO 的改进版
+
+DAPO (Dynamic Sampling Policy Optimization) 针对 GRPO 实际训练中的问题，提出了六项改进。
+
+### 核心动机
+
+GRPO 训练中存在三个主要问题：
+1. **clip 范围设置不合理** —— 低概率关键 token 被抑制
+2. **采样冗余** —— 得分相同的样本产生 0 优势，浪费梯度
+3. **长序列梯度被稀释** —— 长回答的 token 权重过低
+
+### 六项改进
+
+| 改进 | 问题 | 解决方案 |
+|------|------|----------|
+| **Clip-Higher** | clip 上界过小，低概率关键 token 涨幅受限 | 提高上界 $\epsilon_{\text{high}}$，释放上涨空间 |
+| **Dynamic Sampling** | 采样结果得分相同 → 优势为 0 → 梯度浪费 | 约束条件：$0 < \|\{o_i \mid \text{is_equivalent}(a, o_i)\}\| < G$，保证得分多样性 |
+| **Token-Level Loss** | GRPO 先对 sample 内 token 平均，再对 batch 平均，长回答 token 权重被稀释 | 改为全局按总 token 数归一化：$\frac{1}{\sum|o_i|}$ 替代 $\frac{1}{G} \cdot \frac{1}{|o_i|}$ |
+| **Soft Punishment** | 回答过长问题 | 双阈值：超阈值线性惩罚，突破第二阈值则奖励归零 |
+| **移除 KL 散度** | 长文本推理模型分布会显著偏离初始模型，KL 约束不再必要 | **直接删除 KL 项** |
+| **规则奖励** | Reward hacking：模型利用奖励模型漏洞 | 编程/数学题用规则判断对错：$R = 1$ (正确) / $-1$ (错误) |
+
+### 关键结论
+
+> **DAPO 在长文本推理场景中移除了 KL 散度约束**
+> 
+> 传统 RLHF/PPO 使用 KL 惩罚防止策略偏离参考模型太远，但实验发现长文本推理模型的分布**天然会显著偏离**初始模型，此时 KL 约束反而成为负担，因此 DAPO 选择直接移除。
+
+---
+
 *（待补充：PPO Loss 完整构成、KL Penalty、DPO 代码实现等）*

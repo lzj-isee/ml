@@ -9,8 +9,9 @@
 | 文件 | 内容概述 |
 |------|----------|
 | [`llm/tokenization.md`](llm/tokenization.md) | 分词方法详解：BBPE (Byte-level BPE) 原理、构建步骤、与BPE对比、跨语言通用性、OOV问题处理 |
-| [`llm/rlhf.md`](llm/rlhf.md) | RLHF/PPO/GRPO/DPO：GAE、Token/Sequence-level Advantage、Bradley-Terry、变分法推导、DPO损失函数 |
+| [`llm/rlhf.md`](llm/rlhf.md) | RLHF/PPO/GRPO/DPO/DAPO：GAE、Advantage计算、Bradley-Terry、DPO推导、**DAPO六项改进（含KL散度移除）** |
 | [`llm/decoding.md`](llm/decoding.md) | 解码与采样：Frequency/Presence Penalty计算原理、代码实现、与Temperature区别 |
+| [`llm/lora.md`](llm/lora.md) | LoRA原理与初始化：**降维层A高斯随机、升维层B初始化为0**、与Adapter对比、超参数 |
 
 ---
 
@@ -51,9 +52,14 @@ docs/
 ├── _llm_qa.md                   # LLM面试题摘录（牛客网来源）
 ├── learning_roadmap.md          # NumPy实现深度学习面试路线图
 ├── llm_interview_qa.md          # LLM面试八股系统整理
-└── basics/                      # 基础知识
-    ├── floating_point_formats.md   # 浮点数格式详解
-    └── python_tips.md              # Python小技巧
+├── basics/                      # 基础知识
+│   ├── floating_point_formats.md   # 浮点数格式详解
+│   └── python_tips.md              # Python小技巧
+└── llm/                         # LLM 系统知识
+    ├── tokenization.md             # BBPE分词
+    ├── rlhf.md                     # RLHF/PPO/GRPO/DPO/DAPO
+    ├── decoding.md                 # 解码与采样
+    └── lora.md                     # LoRA原理与初始化
 ```
 
 ---
@@ -65,12 +71,14 @@ docs/
 | `#Transformer` | `_llm_qa.md`, `llm_interview_qa.md`, `learning_roadmap.md` |
 | `#Attention` | `_llm_qa.md`, `llm_interview_qa.md`, `learning_roadmap.md` |
 | `#位置编码` | `_llm_qa.md`, `llm_interview_qa.md` |
-| `#微调` | `_llm_qa.md`, `llm_interview_qa.md` |
-| `#RLHF` | `_llm_qa.md`, `llm_interview_qa.md` |
+| `#微调` | `_llm_qa.md`, `llm_interview_qa.md`, `llm/lora.md` |
+| `#LoRA` | `llm/lora.md` |
+| `#RLHF` | `_llm_qa.md`, `llm_interview_qa.md`, `llm/rlhf.md` |
+| `#DAPO` | `llm/rlhf.md` |
 | `#量化` | `basics/floating_point_formats.md` |
 | `#面试题` | `_llm_qa.md`, `llm_interview_qa.md`, `learning_roadmap.md` |
 | `#Python` | `basics/python_tips.md` |
 
 ---
 
-*最后更新: 2026-05-02*
+*最后更新: 2026-05-03*

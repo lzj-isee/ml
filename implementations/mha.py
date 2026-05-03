@@ -74,6 +74,11 @@ class Attention:
         return o # b, s, h
     
 class FNN:
+    """SwiGLU (Swish-Gated Linear Unit) FFN
+    现代LLM（LLaMA、Mistral等）使用的前馈网络结构
+    公式: FFN(x) = down(silu(gate(x)) ⊗ up(x))
+    其中 ⊗ 是逐元素乘法，比传统FFN多一个门控分支
+    """
     def __init__(self, hidden_dim: int, inter_dim: int) -> None:
         self.up = torch.nn.Linear(hidden_dim, inter_dim, bias = False)
         self.down = torch.nn.Linear(inter_dim, hidden_dim, bias = False)
