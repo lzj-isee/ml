@@ -119,6 +119,85 @@ $$A_i = \frac{r_i - \text{mean}(\{r\})}{\text{std}(\{r\})}$$
 
 ---
 
+### 为什么 GRPO 训练开始时 Loss 为 0？
+
+这是一个常见的观察现象，下面从公式推导解释原因。
+
+#### GRPO 损失公式
+
+$$
+\mathcal{L}_{\text{GRPO}}(\theta) = -\frac{1}{G} \sum_{i=1}^{G} \frac{1}{|o_i|} \sum_{t=1}^{|o_i|} \left[ \underbrace{\text{clip-比率} \cdot \hat{A}_{i,t}}_{\text{优势部分}} - \underbrace{\text{KL散度}}_{\text{正则部分}} \right]
+$$
+
+#### 训练启动时的特殊状态
+
+**关键条件**：训练开始时，待更新参数 $\pi_\theta$ **未发生更新**，与历史参数 $\pi_{\theta^{\text{old}}}$ **完全一致**。
+
+因此：**比率 = 1**
+
+$$
+\frac{\pi_\theta(o_{i,t} \mid q, o_{i,<t})}{\pi_{\theta^{\text{old}}}(o_{i,t} \mid q, o_{i,<t})} = 1
+$$
+
+#### 1. 优势部分为什么为 0？
+
+GRPO 中优势值在**组内标准化**：
+
+$$
+\hat{A}_i = \frac{r_i - \text{mean}(\{r_1, r_2, \cdots, r_G\})}{\text{std}(\{r_1, r_2, \cdots, r_G\})}
+$$
+
+**关键性质**：标准化后的优势值在组内**均值为 0**。
+
+因此当参数比率为 1 时：
+
+$$
+\frac{1}{G} \sum_{i=1}^{G} \frac{1}{|o_i|} \sum_{t=1}^{|o_i|} \hat{A}_{i,t} = 0
+$$
+
+**→ 优势部分 Loss = 0**
+
+#### 2. KL 散度部分为什么为 0？
+
+GRPO 采用 **K3 估计** 减少计算量（而非标准 KL）：
+
+$$
+\text{KL}_{\text{K3}} = \frac{\pi_{\text{ref}}}{\pi_\theta} - \log\frac{\pi_{\text{ref}}}{\pi_\theta} - 1
+$$
+
+训练开始时，$\pi_{\text{ref}}$ 与 $\pi_\theta$ 完全相同：
+
+$$
+\frac{\pi_{\text{ref}}}{\pi_\theta} = 1
+$$
+
+代入：
+
+$$
+\text{KL}_{\text{K3}} = 1 - \log(1) - 1 = 0
+$$
+
+**→ KL 散度部分 Loss = 0**
+
+#### 总结
+
+| 部分 | 训练开始时 | 原因 |
+|-----|-----------|------|
+| **优势部分** | 0 | 组内标准化优势值均值为 0 |
+| **KL 散度部分** | 0 | $\pi_\theta = \pi_{\text{ref}}$，比率为 1 |
+| **总 Loss** | **0** | 两部分均为 0 |
+
+#### 重要说明：与 Loss 计算方式的关系
+
+用户指出：这与 loss 的具体计算方式有关。
+
+- **标准 GRPO**：先在 seq 内部算平均，再所有 seq 算平均 → **开始时为 0**
+- **全局 token 平均**：如果是按照全局 token 数直接归一化（如 DAPO 的 Token-Level Loss），开始时**可能不为 0**
+
+DAPO 提出的 **Token-Level Loss** 改进正是针对此问题，将归一化方式从 $\frac{1}{G} \cdot \frac{1}{|o_i|}$ 改为 $\frac{1}{\sum |o_i|}$，防止长序列梯度被稀释。
+
+---
+
 ## DPO (Direct Preference Optimization)
 
 DPO 是 RLHF 的替代方案，**直接把偏好数据用于优化策略，绕过显式奖励模型和强化学习**。
