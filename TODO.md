@@ -1,0 +1,7 @@
+- 如何计算MFU
+- 视频生成有哪些评价指标
+- 【低优先】conv1d的 forward 和 backward
+- 【低优先】pooling的forward和backward
+- 【低优先】转置卷积
+- flash-attn的思想
+- MTP训练策略
