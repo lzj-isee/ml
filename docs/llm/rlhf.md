@@ -119,6 +119,85 @@ $$A_i = \frac{r_i - \text{mean}(\{r\})}{\text{std}(\{r\})}$$
 
 ---
 
+### GRPO 的劣势与问题
+
+#### 1. Token-level 监督信号缺失
+
+PPO 通过 GAE 为**每个 token**计算不同的 advantage，模型能知道序列中哪个位置贡献好/坏。
+
+GRPO 的 advantage 是 **sequence-level**，同一个序列所有 token 共享相同 advantage：
+
+```python
+# PPO: 每个 token 知道自己在序列中的具体贡献
+advantages = [0.1, -0.2, 0.5, 0.3]  # token 0贡献+0.1, token 1贡献-0.2...
+
+# GRPO: 所有 token 共享同一个"平均分"
+advantage = 0.67  # 不知道哪个 token 好，只知道这个 response 整体好
+```
+
+**后果**：
+- **Reward sparsity**：模型无法定位 response 中具体哪个 token 导致了低分
+- 训练信号模糊，不如 PPO 精细
+
+#### 2. Group Variance / Collapse 问题
+
+GRPO 依赖 group 内的 reward 分布计算 advantage：
+
+$$
+A_i = \frac{r_i - \text{mean}(\{r\})}{\text{std}(\{r\})}
+$$
+
+**问题场景**：
+
+```python
+# 如果 group 内所有 sample 的 reward 相同
+r_group = [1.0, 1.0, 1.0, 1.0]  # 或全为 0
+# std = 0 → 除以零或数值不稳定 → advantage 无法计算
+```
+
+**实际训练中的演变**：
+- **训练初期**：policy 还没学会，采样多样性高，group variance 正常
+- **训练后期**：policy 收敛，多数 sample 趋于相似，group variance 下降 → **更新信号减弱甚至消失**
+
+#### 3. Sample Efficiency 问题
+
+GRPO 必须**生成整个 group** 后才能计算 advantage：
+
+| 方法 | 更新时机 |
+|------|----------|
+| PPO | Critic 预估 value，采样完立即计算 advantage 更新 |
+| GRPO | 必须等 group 内所有 G 个 response 都生成并打分后才能计算相对优势 |
+
+**后果**：
+- 延迟更新，样本利用率相对较低
+- 如果 group 内 reward 分布方差大，baseline 估计不准
+
+#### 4. 缓解策略（工程实践）
+
+| 方法 | 思路 |
+|------|------|
+| **Temperature sampling** | 提高采样 temperature，强制增加输出多样性，防止 collapse |
+| **KL penalty** | 添加 KL divergence 约束，防止 policy 坍缩到单一模式 |
+| **Dynamic group size** | 根据 variance 动态调整 group size（variance 低时增大 G）|
+| **Reward shaping** | 引入过程奖励或长度惩罚，打破 binary reward，增加信号丰富度 |
+| **Repetition penalty** | DeepSeek 实际采用，防止模型生成重复内容导致 group 同质化 |
+
+---
+
+### PPO vs GRPO 对比总结
+
+| 维度 | PPO | GRPO |
+|------|-----|------|
+| **Advantage 来源** | Critic 网络估算的 value baseline | Group 内采样输出的相对奖励均值 |
+| **Reward 粒度** | Token-level (GAE) | Sequence-level |
+| **Critic 依赖** | 需要单独训练 | **不需要**，节省显存 |
+| **显存占用** | 高（Policy + Critic + Reward Model）| 低（Policy + Reward Model）|
+| **Sample efficiency** | 高，采样完立即更新 | 低，需等整个 group 生成 |
+| **更新稳定性** | Critic 估计误差，但不受 group variance 影响 | Group variance 敏感，可能 collapse |
+| **适用场景** | 有明确 token-level reward（tool use、code exec 反馈）| Outcome-only reward（数学答案对错）|
+
+---
+
 ### 为什么 GRPO 训练开始时 Loss 为 0？
 
 这是一个常见的观察现象，下面从公式推导解释原因。
