@@ -20,6 +20,7 @@
 | [`llm/kl_estimators.md`](llm/kl_estimators.md) | KL散度估计方法：**K1/K2/K3**三种近似、K3推导（二阶泰勒展开）、数值稳定性分析、为什么RL用K3 |
 | [`llm/badcase_handling.md`](llm/badcase_handling.md) | 业务实践：**大模型Badcase解决策略**、6级优先级（Prompt→前后置→Agent→SFT→RL→预训练）、成本与效果权衡 |
 | [`llm/perplexity.md`](llm/perplexity.md) | 模型评估指标：**困惑度PPL**计算公式、与交叉熵关系、代码实现、数值解读、局限性分析 |
+| [`llm/mtp.md`](llm/mtp.md) | **MTP多Token预测**：顺序型vs并行型架构对比、DeepSeek-V3实现、自推测解码原理、代码实现 |
 
 ---
 
@@ -77,7 +78,8 @@ docs/
     ├── qwen_evolution.md           # Qwen模型演进
     ├── kl_estimators.md            # KL散度估计方法（K1/K2/K3）
     ├── badcase_handling.md         # 大模型Badcase业务实践
-    └── perplexity.md               # 困惑度PPL
+    ├── perplexity.md               # 困惑度PPL
+    └── mtp.md                      # MTP多Token预测
 ```
 
 ---
@@ -105,6 +107,9 @@ docs/
 | `#业务实践` | `llm/badcase_handling.md` |
 | `#困惑度` | `llm/perplexity.md` |
 | `#评估指标` | `llm/perplexity.md` |
+| `#MTP` | `llm/mtp.md` |
+| `#推测解码` | `llm/mtp.md` |
+| `#推理加速` | `llm/mtp.md` |
 | `#量化` | `basics/floating_point_formats.md` |
 | `#面试题` | `_llm_qa.md`, `llm_interview_qa.md`, `learning_roadmap.md` |
 | `#Python` | `basics/python_tips.md` |
