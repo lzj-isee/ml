@@ -45,6 +45,7 @@
 | 文件 | 内容概述 |
 |------|----------|
 | [`docs/agent/claudecode_design.md`](docs/agent/claudecode_design.md) | **Claude Code 设计分析**：五层渐进上下文压缩、工具调用设计、与业界常见做法对比 |
+| [`docs/agent/claude_md_guide.md`](docs/agent/claude_md_guide.md) | **CLAUDE.md 编写指南**：800字原则、"不要做什么"比"要做什么"更有效、标杆文件胜过文字规则 |
 
 ---
 
@@ -88,7 +89,8 @@ ml/
 │   ├── learning_roadmap.md         # NumPy实现深度学习面试路线图
 │   ├── llm_interview_qa.md         # LLM面试八股系统整理
 │   ├── agent/
-│   │   └── claudecode_design.md    # Claude Code 设计分析
+│   │   ├── claudecode_design.md    # Claude Code 设计分析
+│   │   └── claude_md_guide.md      # CLAUDE.md 编写指南
 │   ├── basics/
 │   │   ├── floating_point_formats.md  # 浮点数格式详解
 │   │   ├── python_tips.md             # Python小技巧
@@ -153,7 +155,8 @@ ml/
 | `#分布式` | `basics/distributed_comm.md` |
 | `#通信原语` | `basics/distributed_comm.md` |
 | `#Agent` | `agent/claudecode_design.md` |
-| `#ClaudeCode` | `agent/claudecode_design.md` |
+| `#ClaudeCode` | `agent/claudecode_design.md`, `agent/claude_md_guide.md` |
+| `#CLAUDE.md` | `agent/claude_md_guide.md` |
 
 ---
 
